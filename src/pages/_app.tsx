@@ -1,8 +1,14 @@
 import "@/styles/globals.css";
+import "@/styles/spinner-loading.scss"
+import "@/styles/account.scss"
+import "@/styles/manage-style.scss"
 import "react-toastify/dist/ReactToastify.css";
+import "react-calendar/dist/Calendar.css";
+import 'react-quill/dist/quill.snow.css';
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import "../../components/auth/style.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
@@ -34,7 +40,7 @@ export default function App({
       <SessionProvider session={session}>
         <ToastContainer
           position="top-right"
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={true}

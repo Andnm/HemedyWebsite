@@ -9,111 +9,23 @@ import ItemBlog from "@components/healingPageComponent/ItemBlog";
 import ItemWorkshop from "@components/healingPageComponent/ItemWorkshop";
 import { BlogType } from "@/types/blog.type";
 import { WorkshopType } from "@/types/workshop.type";
+import { toast } from "react-toastify";
+import workshop from "@services/workshop";
+import blog from "@services/blog";
+import { Spin } from "antd";
+import { scrollToElement } from "@utils/global";
+import ScrollToTopButton from "@components/scroll/ScrollToTopButton";
 
 const HomeLayoutNoSSR = dynamic(() => import("@layout/HomeLayout"), {
   ssr: false,
 });
 
-const blog_list_tmp: BlogType[] = [
-  {
-    id: 1,
-    title: "Xu hướng du lịch chữa lành",
-    type: "Tâm Sự Và Chia Sẻ",
-    content: "data test",
-    category: "travel",
-    created_at: "18 tháng 6 năm 2023",
-    representative_img:
-      "https://i2.ex-cdn.com/crystalbay.com/files/content/2024/07/18/du-lich-chua-lanh-la-gi-1-1008.jpg",
-  },
-  {
-    id: 2,
-    title: "Xu hướng du lịch chữa lành",
-    type: "Tâm Sự Và Chia Sẻ",
-    content: "data test",
-    category: "travel",
-    created_at: "18 tháng 6 năm 2023",
-    representative_img:
-      "https://i2.ex-cdn.com/crystalbay.com/files/content/2024/07/18/du-lich-chua-lanh-la-gi-1-1008.jpg",
-  },
-  {
-    id: 3,
-    title: "Suy nghĩ về mọi điều tích cực",
-    type: "Kiến Thức Hữu Ích",
-    content: "data test",
-    category: "travel",
-    created_at: "18 tháng 6 năm 2023",
-    representative_img:
-      "https://i2.ex-cdn.com/crystalbay.com/files/content/2024/07/18/du-lich-chua-lanh-la-gi-1-1008.jpg",
-  },
-  {
-    id: 4,
-    title: "Suy nghĩ về mọi điều tích cực",
-    type: "Kiến Thức Hữu Ích",
-    content: "data test",
-    category: "travel",
-    created_at: "18 tháng 6 năm 2023",
-    representative_img:
-      "https://i2.ex-cdn.com/crystalbay.com/files/content/2024/07/18/du-lich-chua-lanh-la-gi-1-1008.jpg",
-  },
-];
-
-const workshop_list_tmp: WorkshopType[] = [
-  {
-    id: 1,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 2,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 3,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 4,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 5,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-];
-
-const scrollToElement = (elementId: string) => {
-  const element = document.getElementById(elementId);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-};
-
 const HealingPage: React.FC = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [workshopListData, setWorkshopListData] = useState<WorkshopType[]>([]);
+  const [blogListData, setBlogListData] = useState<BlogType[]>([]);
 
   useEffect(() => {
     const scrollPosition = sessionStorage.getItem("scrollPosition");
@@ -123,10 +35,58 @@ const HealingPage: React.FC = () => {
     }
   }, []);
 
-  const handleViewAllClick = (sectionId) => {
+  const handleViewAllClick = (sectionId, path: string) => {
     sessionStorage.setItem("scrollPosition", sectionId);
-    router.push("/healing/blog-section");
+    router.push(path);
   };
+
+  useEffect(() => {
+    const fetchWorkshopList = async () => {
+      setIsLoading(true);
+      try {
+        const responseGetAllWorkshop = await workshop.getAllWorkshopList();
+
+        const sortedWorkshopsList = responseGetAllWorkshop.sort(
+          (a: WorkshopType, b: WorkshopType) =>
+            new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+        );
+
+        setWorkshopListData(sortedWorkshopsList);
+      } catch (error: any) {
+        toast.error("Có lỗi khi tải dữ liệu");
+        toast.error(error!.response?.data?.message);
+        console.error("Có lỗi khi tải dữ liệu:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWorkshopList();
+  }, []);
+
+  useEffect(() => {
+    const fetchBlogList = async () => {
+      setIsLoading(true);
+      try {
+        const responseGetAllBlog = await blog.getAllBlogList();
+
+        const sortedBlogsList = responseGetAllBlog.sort(
+          (a: BlogType, b: BlogType) =>
+            new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+        );
+
+        setBlogListData(sortedBlogsList);
+      } catch (error: any) {
+        toast.error("Có lỗi khi tải dữ liệu");
+        toast.error(error!.response?.data?.message);
+        console.error("Có lỗi khi tải dữ liệu:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlogList();
+  }, []);
 
   return (
     <HomeLayoutNoSSR
@@ -148,28 +108,41 @@ const HealingPage: React.FC = () => {
               height={472}
               alt="avatar_doc"
               className="mb-12"
+              loading="lazy"
             />
           </div>
 
-          <div className="music-section relative flex justify-center items-center pt-16">
+          <div
+            id="music-view-all-button"
+            className="music-section relative flex justify-center items-center pt-16"
+          >
             <Image
               src="/images/music-page.png"
               width={1400}
               height={600}
               alt="avatar_doc"
               className="mb-12"
+              loading="lazy"
             />
             <div className="container absolute">
               <div
                 className="btn-change-page absolute top-1/2 left-16"
-                onClick={() => router.push("/healing/music-section")}
+                onClick={() =>
+                  handleViewAllClick(
+                    "music-view-all-button",
+                    "/healing/music-section"
+                  )
+                }
               >
                 Tham gia
               </div>
             </div>
           </div>
 
-          <div className="banner flex flex-col justify-center items-center">
+          <div
+            id="podcast-view-all-button"
+            className="banner flex flex-col justify-center items-center"
+          >
             <h1 className="text-center mt-10 font-bold text-5xl">
               Podcast với những câu chuyện <br></br>và sự chia sẻ rất gần gủi
             </h1>
@@ -183,60 +156,90 @@ const HealingPage: React.FC = () => {
               height={500}
               alt="avatar_doc"
               objectFit="cover"
+              loading="lazy"
             />
             <div
               className="btn-change-page my-6"
-              onClick={() => router.push("/healing/podcast-section")}
+              onClick={() =>
+                handleViewAllClick(
+                  "podcast-view-all-button",
+                  "/healing/podcast-section"
+                )
+              }
             >
               Xem ngay
             </div>
           </div>
 
-          <div className="blog-section">
-            <div className="container">
+          <div className="blog-section" id="blog-view-all-button">
+            <div className="container" id="blog-view-detail">
               <div className="header flex items-center justify-between px-8">
                 <h1 className="text-3xl">
                   Khám phá các bài viết về <br></br>chữa lành tinh thần
                 </h1>
                 <div
-                  id="blog-view-all-button"
                   className="btn-view-all"
-                  onClick={() => handleViewAllClick("blog-view-all-button")}
+                  onClick={() =>
+                    handleViewAllClick(
+                      "blog-view-all-button",
+                      "/healing/blog-section"
+                    )
+                  }
                 >
                   Tất cả
                 </div>
               </div>
 
-              <div className="blog-list gird grid-cols-3 gap-8 px-8 mt-6">
-                {blog_list_tmp.slice(0, 3).map((blog, index) => (
-                  <ItemBlog blog={blog} key={index} />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="container flex justify-center items-center mt-6 h-[500px]">
+                  <Spin spinning={isLoading} />
+                </div>
+              ) : (
+                <div className="blog-list gird grid-cols-3 gap-8 px-8 mt-6">
+                  {blogListData.slice(0, 3).map((blog, index) => (
+                    <ItemBlog blog={blog} key={index} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="workshop-section mb-10">
+          <div className="workshop-section mb-10" id="workshop-view-all-button">
             <div className="container">
               <div className="header flex items-center justify-between px-8">
                 <h1 className="text-3xl">
                   Những workshop thú vị <br></br>đầy thư giản
                 </h1>
                 <div
-                  id="workshop-view-all-button"
                   className="btn-view-all"
-                  onClick={() => handleViewAllClick("workshop-view-all-button")}
+                  onClick={() =>
+                    handleViewAllClick(
+                      "workshop-view-all-button",
+                      "/healing/workshop-section"
+                    )
+                  }
                 >
                   Tất cả
                 </div>
               </div>
 
-              <div className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6">
-                {workshop_list_tmp.slice(0, 4).map((workshop, index) => (
-                  <ItemWorkshop workshop={workshop} key={index} />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="container flex justify-center items-center mt-6 h-[500px]">
+                  <Spin spinning={isLoading} />
+                </div>
+              ) : (
+                <div
+                  id="workshop-view-detail"
+                  className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6"
+                >
+                  {workshopListData.slice(0, 4).map((workshop, index) => (
+                    <ItemWorkshop workshop={workshop} key={index} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+          <ScrollToTopButton/>
         </div>
       }
     />

@@ -14,7 +14,7 @@ const MyDocument = () => {
         />
       </Head>
 
-      <body >
+      <body>
         <Main />
         <NextScript></NextScript>
         <script

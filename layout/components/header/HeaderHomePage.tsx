@@ -1,15 +1,44 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-
+import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_DOCTOR } from "@utils/constants";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_ITEMS_GENERAL } from "@utils/constants";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+import { BiLogOut } from "react-icons/bi";
+import {
+  generateFallbackAvatar,
+  isExpiredTimeToken,
+  isExpiredTimeTokenSecondHandle,
+} from "@utils/helpers";
 
 const HeaderHomePage = () => {
   const router = useRouter();
   const [userData, setUserData] = React.useState<any | null>(null);
   const pathName = usePathname();
+
+  const { data: session } = useSession();
+  const { data: token } = useSession();
+
+  const isTokenExpired = (token) => {
+    return (
+      !token.user.access_token ||
+      isExpiredTimeToken(token.loginDate, token.expiresIn) ||
+      isExpiredTimeTokenSecondHandle(token.iat, token.exp)
+    );
+  };
+
+  useEffect(() => {
+    if (session?.user.roles === ROLE_ADMIN) {
+      router.push("/admin/dashboard");
+    } else if (session?.user.roles === ROLE_DOCTOR) {
+      router.push("/doctor/calendar");
+    }
+  }, [session, router]);
+
+  // console.log("token", token)
+  // console.log("session", session)
 
   const getNavItems = () => {
     if (userData && userData.role_name) {
@@ -21,6 +50,14 @@ const HeaderHomePage = () => {
       return NAV_ITEMS_GENERAL;
     }
   };
+
+  useEffect(() => {
+    if (session?.user?.roles) {
+      document.title = `Hemedy | ${session.user.roles}`;
+    } else {
+      document.title = "Hemedy";
+    }
+  }, [session?.user?.roles]);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -52,6 +89,7 @@ const HeaderHomePage = () => {
               width={63}
               height={80}
               alt="logo"
+              loading="lazy"
             />
           </Link>
 
@@ -59,9 +97,42 @@ const HeaderHomePage = () => {
             <div className="mr-4 hidden lg:block">{navList}</div>
           </div>
 
-          <button className="hidden lg:inline-block btn-login cursor-pointer">
-            <p className="font-medium">Đăng nhập</p>
-          </button>
+          {session && !isTokenExpired(token) ? (
+            <div className="profile-section flex flex-row gap-2 items-center">
+              <div
+                className="flex flex-row gap-2 items-center avatar-name-section"
+                onClick={() => router.push("/account")}
+              >
+                <img
+                  src={
+                    session?.user?.image === null ||
+                    session?.user?.image === undefined
+                      ? generateFallbackAvatar(session?.user?.name!)
+                      : session?.user?.image
+                  }
+                  alt="avatar"
+                  loading="lazy"
+                />
+
+                <p className="name text-center" style={{maxWidth: "150px"}}>{session.user.name}</p>
+              </div>
+              <BiLogOut
+                onClick={() => {
+                  signOut();
+                }}
+                className="logout-icon w-5 h-5 cursor-pointer"
+              />
+            </div>
+          ) : (
+            <button
+              className="hidden lg:inline-block btn-login cursor-pointer"
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              <p className="font-medium">Đăng nhập</p>
+            </button>
+          )}
         </div>
       </div>
     </div>

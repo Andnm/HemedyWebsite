@@ -22,6 +22,7 @@ import { IoIosCall } from "react-icons/io";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+import ScrollToTopButton from "@components/scroll/ScrollToTopButton";
 
 const HomeLayoutNoSSR = dynamic(() => import("@layout/HomeLayout"), {
   ssr: false,
@@ -58,7 +59,10 @@ const HomePage: React.FC = () => {
                     <LuNewspaper className="text-white " />
                   </div>
 
-                  <div className="button-feedback">
+                  <div
+                    className="button-feedback"
+                    onClick={() => router.push("/test")}
+                  >
                     <p className="font-semibold text-sm">Kiểm tra đánh giá</p>
                   </div>
                 </div>
@@ -70,6 +74,7 @@ const HomePage: React.FC = () => {
                       width={41}
                       height={41}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                     <div className="flex flex-col">
                       <p className="font-bold">Thomas daniel</p>
@@ -92,6 +97,7 @@ const HomePage: React.FC = () => {
                   width={500}
                   height={500}
                   alt="home_img"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -128,7 +134,10 @@ const HomePage: React.FC = () => {
                       <CiLink className="text-white text-2xl" />
                     </div>
 
-                    <div className="button-connect">
+                    <div
+                      className="button-connect"
+                      onClick={() => router.push("/connection")}
+                    >
                       <p className="text-sm text-white">Kết nối ngay</p>
                     </div>
                   </div>
@@ -230,6 +239,7 @@ const HomePage: React.FC = () => {
                   width={178}
                   height={56}
                   alt="home_img"
+                  loading="lazy"
                 />
               </div>
               <div className="flex flex-col justify-center">
@@ -257,6 +267,7 @@ const HomePage: React.FC = () => {
                     width={585}
                     height={621}
                     alt="home_img"
+                    loading="lazy"
                   />
                   <div className="arrow arrow-yoga">
                     <Image
@@ -264,6 +275,7 @@ const HomePage: React.FC = () => {
                       width={22}
                       height={42}
                       alt="home_img"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -288,6 +300,7 @@ const HomePage: React.FC = () => {
                     width={585}
                     height={621}
                     alt="home_img"
+                    loading="lazy"
                   />
                   <div className="arrow arrow-meditation">
                     <Image
@@ -295,6 +308,7 @@ const HomePage: React.FC = () => {
                       width={22}
                       height={42}
                       alt="home_img"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -341,6 +355,7 @@ const HomePage: React.FC = () => {
                       height={363.73}
                       alt="avatar_doc"
                       className="absolute z-10"
+                      loading="lazy"
                     />
 
                     <div className="flex flex-col items-center -left-6 bottom-28 justify-center gap-5 list-option absolute z-20">
@@ -349,24 +364,28 @@ const HomePage: React.FC = () => {
                         width={22.46}
                         height={21.09}
                         alt="avatar_doc"
+                        loading="lazy"
                       />
                       <Image
                         src="/images/music-1.png"
                         width={19.71}
                         height={20}
                         alt="avatar_doc"
+                        loading="lazy"
                       />
                       <Image
                         src="/images/smile.png"
                         width={19.71}
                         height={20}
                         alt="avatar_doc"
+                        loading="lazy"
                       />
                       <Image
                         src="/images/sportify.png"
                         width={19.71}
                         height={20}
                         alt="avatar_doc"
+                        loading="lazy"
                       />
                     </div>
                     <div className="background-linear"></div>
@@ -455,6 +474,7 @@ const HomePage: React.FC = () => {
                       width={300}
                       height={300}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                   <div
@@ -466,6 +486,7 @@ const HomePage: React.FC = () => {
                       width={280}
                       height={280}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                   <div
@@ -477,6 +498,7 @@ const HomePage: React.FC = () => {
                       width={300}
                       height={300}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -485,6 +507,7 @@ const HomePage: React.FC = () => {
                 src="/images/Line.png"
                 style={{ width: "99vw", height: "100px" }}
                 className="absolute z-20 line-break "
+                loading="lazy"
               />
 
               <div
@@ -525,6 +548,7 @@ const HomePage: React.FC = () => {
                     width={396}
                     height={437}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
                   <div className="absolute top-12 right-14 cursor-pointer">
                     <Image
@@ -532,6 +556,7 @@ const HomePage: React.FC = () => {
                       width={31}
                       height={31}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -557,6 +582,7 @@ const HomePage: React.FC = () => {
                   width={484.81}
                   height={535}
                   alt="avatar_doc"
+                  loading="lazy"
                 />
                 <div className="absolute top-6 right-6 cursor-pointer">
                   <Image
@@ -564,6 +590,7 @@ const HomePage: React.FC = () => {
                     width={41}
                     height={41}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -578,6 +605,7 @@ const HomePage: React.FC = () => {
                     width={340}
                     height={437 - 56}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
                   <div className="absolute top-6 right-6 cursor-pointer">
                     <Image
@@ -585,6 +613,7 @@ const HomePage: React.FC = () => {
                       width={31}
                       height={31}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -612,6 +641,7 @@ const HomePage: React.FC = () => {
                 width={455}
                 height={740}
                 alt="avatar_doc"
+                loading="lazy"
               />
               <div className="absolute bottom-5 right-5 cursor-pointer">
                 <Image
@@ -619,6 +649,7 @@ const HomePage: React.FC = () => {
                   width={31}
                   height={31}
                   alt="avatar_doc"
+                  loading="lazy"
                 />
               </div>
 
@@ -658,6 +689,7 @@ const HomePage: React.FC = () => {
                     width={379}
                     height={336}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
 
                   <div className="absolute top-5 right-5 cursor-pointer">
@@ -666,6 +698,7 @@ const HomePage: React.FC = () => {
                       width={31}
                       height={31}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
 
@@ -684,6 +717,7 @@ const HomePage: React.FC = () => {
                     width={379}
                     height={336}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
 
                   <div className="absolute top-5 right-5 cursor-pointer">
@@ -692,6 +726,7 @@ const HomePage: React.FC = () => {
                       width={31}
                       height={31}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
 
@@ -757,6 +792,7 @@ const HomePage: React.FC = () => {
                     width={70}
                     height={70}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
                   <div className="flex flex-col">
                     <p className="font-bold text-xl">Alena Alex</p>
@@ -788,6 +824,7 @@ const HomePage: React.FC = () => {
                       width={70}
                       height={70}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                     <div className="flex flex-col">
                       <p className="font-bold text-xl">Thomas daniel</p>
@@ -816,6 +853,7 @@ const HomePage: React.FC = () => {
                       width={70}
                       height={70}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                     <div className="flex flex-col">
                       <p className="font-bold text-xl">Thomas daniel</p>
@@ -845,6 +883,7 @@ const HomePage: React.FC = () => {
                     width={70}
                     height={70}
                     alt="avatar_doc"
+                    loading="lazy"
                   />
                   <div className="flex flex-col">
                     <p className="font-bold text-xl">Thomas Edison</p>
@@ -890,6 +929,7 @@ const HomePage: React.FC = () => {
                       width={56}
                       height={56}
                       alt="avatar_doc"
+                      loading="lazy"
                     />
                   </div>
                   <p className="text-lg">
@@ -957,68 +997,69 @@ const HomePage: React.FC = () => {
               </div>
             </div>
 
-            <div
-              className="container "
-              data-aos="zoom-in-down"
-            >
+            <div className="container " data-aos="zoom-in-down">
               <div className="form mt-20 flex flex-row">
-              <div className="w-1/2 left">
-                <h1 className="font-bold text-3xl mb-4">Liên hệ với hemedy</h1>
-                <p className="font-normal text-base mb-9">
-                  Hãy để lời nhắn nếu bạn cần điều gì hỏi chúng tôi...
-                </p>
-                <h1 className="font-bold text-lg mb-3">
-                  Giờ làm việc tại Việt Nam
-                </h1>
-                <p className="font-normal text-base mb-6">
-                  Thứ Hai - Thứ Sáu 8:00 sáng đến 5:00 chiều
-                </p>
-                <div className="flex flex-row gap-3 items-center">
-                  <IoIosCall />
-                  <p>84 123 456 789</p>
+                <div className="w-1/2 left">
+                  <h1 className="font-bold text-3xl mb-4">
+                    Liên hệ với hemedy
+                  </h1>
+                  <p className="font-normal text-base mb-9">
+                    Hãy để lời nhắn nếu bạn cần điều gì hỏi chúng tôi...
+                  </p>
+                  <h1 className="font-bold text-lg mb-3">
+                    Giờ làm việc tại Việt Nam
+                  </h1>
+                  <p className="font-normal text-base mb-6">
+                    Thứ Hai - Thứ Sáu 8:00 sáng đến 5:00 chiều
+                  </p>
+                  <div className="flex flex-row gap-3 items-center">
+                    <IoIosCall />
+                    <p>84 123 456 789</p>
+                  </div>
+                  <div className="flex flex-row gap-3 items-center my-6">
+                    <MdOutlineMailOutline />
+
+                    <p>hemedy@gmail.com</p>
+                  </div>
+
+                  <div className="flex flex-row gap-3 items-center">
+                    <FaLocationDot />
+
+                    <p>28 Đường Lê Duẩn, Quận 1, TP HCM, Việt Nam</p>
+                  </div>
                 </div>
-                <div className="flex flex-row gap-3 items-center my-6">
-                  <MdOutlineMailOutline />
 
-                  <p>hemedy@gmail.com</p>
-                </div>
+                <div className="w-1/2 right pl-24">
+                  <div className="flex flex-row gap-6">
+                    <div className="form-item">
+                      <p className="label">họ tên</p>
+                      <div className="input">
+                        <p>Nguyen Van A</p>
+                      </div>
+                    </div>
 
-                <div className="flex flex-row gap-3 items-center">
-                  <FaLocationDot />
-
-                  <p>28 Đường Lê Duẩn, Quận 1, TP HCM, Việt Nam</p>
-                </div>
-              </div>
-
-              <div className="w-1/2 right pl-24">
-                <div className="flex flex-row gap-6">
-                  <div className="form-item">
-                    <p className="label">họ tên</p>
-                    <div className="input">
-                      <p>Nguyen Van A</p>
+                    <div className="form-item">
+                      <p className="label">email</p>
+                      <div className="input">
+                        <p>nguyenvana@gmail.com</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="form-item">
-                    <p className="label">email</p>
-                    <div className="input">
-                      <p>nguyenvana@gmail.com</p>
+                  <div className="form-item mt-10">
+                    <p className="label"> lời nhắn</p>
+                    <div className="input" style={{ width: "510px" }}>
+                      <p>Bạn cần gì ...</p>
                     </div>
                   </div>
-                </div>
 
-                <div className="form-item mt-10">
-                  <p className="label"> lời nhắn</p>
-                  <div className="input" style={{ width: "510px" }}>
-                    <p>Bạn cần gì ...</p>
-                  </div>
+                  <div className="send-button">Gửi đi</div>
                 </div>
-
-                <div className="send-button">Gửi đi</div>
-              </div>
               </div>
             </div>
           </section>
+
+          <ScrollToTopButton />
         </>
       }
     />

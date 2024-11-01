@@ -3,9 +3,11 @@ import { FaPlay, FaStepForward, FaStepBackward } from "react-icons/fa";
 import { IoPauseOutline, IoReturnUpBack } from "react-icons/io5";
 import { AiOutlineSound } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { MusicPodcastType } from "@/types/music-podcast.type";
+import { scrollToElement } from "@utils/global";
 
 interface Props {
-  list_podcast_music: any;
+  list_podcast_music: MusicPodcastType[];
 }
 
 const PodcastMusicLayout: React.FC<Props> = (props) => {
@@ -28,7 +30,7 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
     const fetchDurations = async () => {
       const newDurations = await Promise.all(
         list_podcast_music.map(async (item) => {
-          const audio = new Audio(item.audioLink);
+          const audio = new Audio(item.audio_link);
           return new Promise<number>((resolve) => {
             audio.onloadedmetadata = () => {
               resolve(Math.floor(audio.duration));
@@ -40,7 +42,7 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
     };
 
     fetchDurations();
-  }, []);
+  }, [list_podcast_music]);
 
   useEffect(() => {
     if (audio) {
@@ -56,7 +58,7 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
     if (audio) {
       audio.pause();
     }
-    const newAudio = new Audio(list_podcast_music[index].audioLink);
+    const newAudio = new Audio(list_podcast_music[index].audio_link);
     newAudio.play();
     setAudio(newAudio);
     setCurrentIndex(index);
@@ -98,12 +100,19 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
     }
   };
 
+  useEffect(() => {
+    scrollToElement("play-list-podcast-music");
+  }, []);
+
   return (
     <>
       <div className="content">
         <div className="container section-new-list">
           <h1 className="text-3xl font-semibold">Những bài hát mới</h1>
-          <div className="field-name mt-7 mb-5 flex flex-row justify-between">
+          <div
+            className="field-name mt-7 mb-5 flex flex-row justify-between"
+            id="play-list-podcast-music"
+          >
             <p className="font-semibold text-xl">Tên bài hát</p>
             <p className="font-semibold text-xl">Thời lượng</p>
           </div>
@@ -117,8 +126,9 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
                   <div className="relative">
                     <img
                       className="img-audio"
-                      src={item.imgUrl}
+                      src={item.img_url}
                       alt={item.name}
+                      loading="lazy"
                     />
                     <div
                       className="play-button flex items-center justify-center cursor-pointer"
@@ -152,9 +162,10 @@ const PodcastMusicLayout: React.FC<Props> = (props) => {
           <div className="grid grid-cols-3">
             <div className="flex items-center">
               <img
-                src={list_podcast_music[currentIndex].imgUrl}
+                src={list_podcast_music[currentIndex].img_url}
                 alt={list_podcast_music[currentIndex].name}
                 className="w-16 h-16 rounded-lg mr-4 object-cover"
+                loading="lazy"
               />
               <div>
                 <p className="font-semibold text-white">

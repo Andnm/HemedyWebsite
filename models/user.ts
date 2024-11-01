@@ -1,7 +1,7 @@
 import { Base, PagingModel } from "./base";
 
 export interface LoginResponse {
-  access_token: string;
+  accessToken: string;
   tokenType: string;
   userId: string;
   expiresIn: number;

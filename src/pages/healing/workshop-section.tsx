@@ -1,146 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { IoReturnUpBack } from "react-icons/io5";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { WorkshopType } from "@/types/workshop.type";
 import ItemWorkshop from "@components/healingPageComponent/ItemWorkshop";
+import workshop from "@services/workshop";
+import { toast } from "react-toastify";
+import { Spin } from "antd";
+import { scrollToElement } from "@utils/global";
 
 const HomeLayoutNoSSR = dynamic(() => import("@layout/HomeLayout"), {
   ssr: false,
 });
 
-const workshop_list_tmp: WorkshopType[] = [
-  {
-    id: 1,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 2,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 3,
-    title: "Làm bánh",
-    type: "Những workshop thú vị",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://cdn.sgtiepthi.vn/wp-content/uploads/2022/03/262033436_654854635923878_4539608096656278712_n.jpg",
-  },
-  {
-    id: 4,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 5,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-  {
-    id: 6,
-    title: "Tô tượng",
-    type: "Những workshop nghệ thuật",
-    subtitle: "Địa điểm dành cho những tín đồ yêu thích làm bánh.",
-    content: "data test",
-    representative_img:
-      "https://2saigon.vn/wp-content/uploads/2022/05/quan-ca-phe-to-tuong-o-tp-hcm_6290240129d6d-scaled.jpeg",
-  },
-];
-
 const WorkshopSection = () => {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [workshopListData, setWorkshopListData] = useState<WorkshopType[]>([]);
 
   const [showAllInteresting, setShowAllInteresting] = useState(false);
   const [showAllArt, setShowAllArt] = useState(false);
 
-  const interestingWorkshops = workshop_list_tmp.filter(
+  const interestingWorkshops = workshopListData.filter(
     (workshop) => workshop.type === "Những workshop thú vị"
   );
 
-  const artWorkshops = workshop_list_tmp.filter(
+  const artWorkshops = workshopListData.filter(
     (workshop) => workshop.type === "Những workshop nghệ thuật"
   );
 
@@ -151,6 +38,34 @@ const WorkshopSection = () => {
   const displayedArtWorkshops = showAllArt
     ? artWorkshops
     : artWorkshops.slice(0, 8);
+
+  useEffect(() => {
+    const fetchWorkshopList = async () => {
+      setIsLoading(true);
+      try {
+        const responseGetAllWorkshop = await workshop.getAllWorkshopList();
+
+        const sortedWorkshopsList = responseGetAllWorkshop.sort(
+          (a: WorkshopType, b: WorkshopType) =>
+            new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+        );
+
+        setWorkshopListData(sortedWorkshopsList);
+      } catch (error: any) {
+        toast.error("Có lỗi khi tải dữ liệu");
+        toast.error(error!.response?.data?.message);
+        console.error("Có lỗi khi tải dữ liệu:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWorkshopList();
+  }, []);
+
+  useEffect(() => {
+    scrollToElement("workshop-content");
+  }, []);
 
   return (
     <HomeLayoutNoSSR
@@ -181,12 +96,16 @@ const WorkshopSection = () => {
                 width={1202}
                 height={472}
                 alt="avatar_doc"
+                loading="lazy"
               />
             </div>
           </div>
 
           <div className="container-list">
-            <div className="header flex items-center justify-between px-8">
+            <div
+              className="header flex items-center justify-between px-8"
+              id="workshop-content"
+            >
               <h1 className="text-3xl">Những workshop thú vị</h1>
               <div
                 className="btn-view-all"
@@ -195,11 +114,18 @@ const WorkshopSection = () => {
                 {showAllInteresting ? "Ẩn bớt" : "Tất cả"}
               </div>
             </div>
-            <div className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6">
-              {displayedInterestingWorkshops.map((workshop, index) => (
-                <ItemWorkshop workshop={workshop} key={index} />
-              ))}
-            </div>
+
+            {isLoading ? (
+              <div className="container flex justify-center items-center mt-6 h-[500px]">
+                <Spin spinning={isLoading} />
+              </div>
+            ) : (
+              <div className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6">
+                {displayedInterestingWorkshops.map((workshop, index) => (
+                  <ItemWorkshop workshop={workshop} key={index} />
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="container-list">
@@ -212,11 +138,18 @@ const WorkshopSection = () => {
                 {showAllArt ? "Ẩn bớt" : "Tất cả"}
               </div>
             </div>
-            <div className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6">
-              {displayedArtWorkshops.map((workshop, index) => (
-                <ItemWorkshop workshop={workshop} key={index} />
-              ))}
-            </div>
+
+            {isLoading ? (
+              <div className="container flex justify-center items-center mt-6 h-[500px]">
+                <Spin spinning={isLoading} />
+              </div>
+            ) : (
+              <div className="workshop-list gird grid-cols-4 gap-4 px-8 mt-6">
+                {displayedArtWorkshops.map((workshop, index) => (
+                  <ItemWorkshop workshop={workshop} key={index} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       }

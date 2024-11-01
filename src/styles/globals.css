@@ -49,7 +49,7 @@ dl,
 dt,
 dd,
 ol,
-ul,
+/* ul, */
 li,
 fieldset,
 form,
@@ -89,6 +89,10 @@ video {
   font-size: 100%;
 }
 
+ul {
+  margin: 0;
+}
+
 @knobs components {
   .btn-submit {
     /* background-color: #ee4623; */
@@ -111,6 +115,11 @@ video {
     background-color: "#01a0e9";
     color: white !important;
   }
+}
+
+.webkit-scrollbar {
+  scrollbar-color: #ccc #f3f4f7;
+  scrollbar-width: thin;
 }
 
 .swiper {
@@ -150,6 +159,8 @@ video {
   --medium-green: #7ba486;
   --normal-green: #188f05;
   --light-yellow: #fbf4e2;
+  --dark-blue: #011632;
+  --light-gray: #f5f5f5;
 
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -157,12 +168,46 @@ video {
 }
 
 .background-main {
-  background-color: var(--light-yellow);
+  background-color: var(--light-yellow) !important;
 }
 
 .general-header-container {
   background-color: var(--dark-green);
   border-radius: 12px;
+}
+
+.general-header-container .profile-section div:first-child {
+  cursor: pointer;
+}
+
+.general-header-container .profile-section img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.general-header-container .profile-section .avatar-name-section {
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+}
+
+.general-header-container .profile-section .logout-icon {
+  color: var(--light-yellow);
+  padding: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+.general-header-container .profile-section .logout-icon:hover,
+.general-header-container .profile-section .avatar-name-section:hover {
+  background-color: var(--medium-green);
+  transition: 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.general-header-container .profile-section p {
+  color: var(--light-yellow);
 }
 
 .general-header-container .nav-items a {
@@ -184,14 +229,21 @@ video {
 
 .general-header-container .btn-login {
   background-color: var(--light-green);
-  color: white;
-  color: white;
   padding: 12px 15px;
   border-radius: 8px;
   border: none;
   font-size: 16px;
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
+}
+
+pre {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.general-header-container .btn-login p {
+  color: var(--light-yellow) !important;
 }
 
 .general-header-container .btn-login:hover {
@@ -992,6 +1044,34 @@ p {
   letter-spacing: 1px;
 }
 
+.test-page .main-result {
+  background-color: var(--semi-dark-green);
+}
+
+.test-page .main-result h1,
+.test-page .main-result p {
+  color: var(--light-yellow);
+}
+
+.test-page .main-result .score {
+  color: #188f05;
+}
+
+.test-page .main-result .btn-again {
+  color: var(--semi-dark-green);
+  background-color: var(--light-yellow);
+  cursor: pointer;
+  padding: 30px 30px;
+  border-radius: 15px;
+  transition: 0.3s ease-in-out;
+}
+
+.test-page .main-result .btn-again:hover {
+  background-color: var(--light-green);
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
 .music-page {
 }
 
@@ -1299,4 +1379,311 @@ p {
 
 .workshop-list .workshop-item .content p {
   color: var(--light-yellow);
+}
+
+.connection-page {
+}
+
+.connection-page .doctor-detail-info {
+  background-color: white;
+}
+
+.connection-page .doctor-detail-info .left .card-info img {
+  width: 385px;
+  height: 488px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.connection-page .doctor-detail-info .left .card-info .intro-info {
+  background-color: #ebebeb;
+  padding: 30px 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.connection-page .doctor-detail-info .left .card-info .intro-info p {
+  color: #004c4c;
+}
+
+.connection-page .doctor-detail-info .right .font-medium {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+}
+
+.connection-page .doctor-detail-info .right .experience-list {
+}
+
+.connection-page .btn-scheduled {
+  width: fit-content;
+  padding: 10px 20px;
+  border: 1px solid var(--light-green);
+  background-color: white;
+  color: var(--light-green);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  border-radius: 15px;
+}
+
+.connection-page .btn-scheduled:hover {
+  background-color: var(--semi-dark-green);
+  transition: 0.3s ease-in-out;
+  color: white;
+}
+
+.connection-page .manage-schedule {
+  width: fit-content;
+}
+
+.connection-page .manage-schedule h1 {
+  color: #3b524c;
+}
+
+.connection-page .manage-schedule .main-schedule {
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.connection-page .manage-schedule .main-schedule .react-calendar {
+  max-width: 420px;
+  background: none;
+  border: none;
+}
+
+.react-calendar__tile--active {
+  background: #188f05 !important;
+}
+
+.react-calendar button {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.react-calendar__month-view__weekdays {
+  background: #eaeaea;
+}
+
+.connection-page .manage-schedule .check-info-schedule .list-slots {
+  display: grid !important;
+}
+
+.connection-page .manage-schedule .check-info-schedule .list-slots .item-slot {
+  padding: 15px 10px;
+  background-color: white;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px solid grey;
+}
+
+.connection-page
+  .manage-schedule
+  .check-info-schedule
+  .list-slots
+  .selected-item-slot {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.connection-page .btn-contact {
+  padding: 20px 25px;
+  border: 1px solid #3b524c;
+  border-radius: 15px;
+  width: fit-content;
+  transition: 0.3s ease-in-out;
+}
+
+.connection-page .btn-contact span {
+  cursor: pointer;
+  color: var(--light-green);
+}
+.connection-page .btn-contact span:hover {
+  text-decoration: underline;
+  transition: 0.3s ease-in-out;
+}
+
+.connection-page .btn-more {
+  background-color: #95c082;
+  transition: 0.3s ease-in-out;
+  border-radius: 15px;
+  color: white;
+}
+
+.connection-page .btn-more:hover {
+  background-color: var(--light-yellow);
+  color: var(--semi-dark-green);
+  transition: 0.3s ease-in-out;
+}
+
+.connection-page .banner {
+  width: 100vw;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/images/connection_banner.png");
+}
+
+.connection-page .banner .content-banner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.connection-page .list-doctor-section .container {
+  display: grid;
+}
+
+.doctor-item {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.doctor-item:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+}
+
+.doctor-item img {
+  width: 100%;
+  aspect-ratio: 5 / 5;
+  object-fit: cover;
+  object-position: top;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.doctor-item .doctor-information p {
+  color: var(--semi-dark-green);
+  text-align: justify;
+}
+
+.doctor-item .doctor-information .other-information {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.doctor-item .action-options .list-icons .icon-item {
+  color: var(--light-green);
+}
+
+.doctor-item .action-options .btn-detail {
+  background-color: var(--light-green);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 15px;
+  width: fit-content;
+  transition: 0.3s ease-in-out;
+}
+
+.doctor-item .action-options .btn-detail:hover {
+  background-color: var(--semi-dark-green);
+  transition: 0.3s ease-in-out;
+}
+
+.connection-page .psychology-package {
+}
+
+.connection-page .psychology-package .title-price {
+  color: var(--light-green);
+  border-radius: 5px;
+  border: 2px solid var(--light-green);
+  padding: 5px 10px;
+}
+
+.connection-page .psychology-package h1 {
+  color: var(--semi-dark-green);
+}
+
+.connection-page .psychology-package p {
+  color: var(--semi-dark-green);
+}
+
+.connection-page .psychology-package .select-session .item-session {
+  background-color: white;
+  padding: 30px 30px;
+  border-radius: 15px;
+}
+
+.connection-page .psychology-package .select-session .item-session .title {
+  color: var(--medium-green);
+}
+
+.connection-page .psychology-package .select-session .item-session .price {
+  color: var(--semi-dark-green);
+}
+
+.select-suitable-session {
+}
+
+.select-suitable-session h1,
+.select-suitable-session p {
+  color: #3b524c;
+}
+
+.select-suitable-session .list-suitable-session {
+  display: grid;
+}
+
+.select-suitable-session .list-suitable-session .item {
+  background-color: #3b524c;
+  border-radius: 17px;
+  padding: 40px 0px;
+}
+
+.select-suitable-session .list-suitable-session .item h1 {
+  color: #95c082;
+}
+
+.select-suitable-session .list-suitable-session .item .option p {
+  color: var(--light-yellow);
+}
+
+.select-suitable-session .list-suitable-session .item .btn-register-session {
+  width: fit-content;
+  background-color: white;
+  color: #3b524c;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 20px;
+}
+
+.select-suitable-session
+  .list-suitable-session
+  .item
+  .btn-register-session:hover {
+  background-color: #95c082;
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.ant-collapse-content-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid gray;
+  color: black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
